@@ -510,11 +510,11 @@ var Cat = cc.Sprite.extend({
         console.log(1);
         if(this.state !== 4)
         {
-        this.stopAllActions();
-        this.state = 3;
-        this.setTextureRect(cc.rect(134,2,60,34));
-        this.zIndex = 1;
-        setTimeout(UI.end, 1000);
+            this.stopAllActions();
+            //this.state = 3;
+            this.setTextureRect(cc.rect(134,2,60,34));
+            //this.zIndex = 1;
+            setTimeout(UI.end, 1000);
         }
         this.state = 4
     },
@@ -628,22 +628,25 @@ var MyScene = cc.Scene.extend({
             onTouchEnded:function(touch, event)
             {
                 var cat = Manager.cat;
-                if(Date.now() - cat.touchtime < TOUCHDELAY)
+                if(cat.state !== 4)
                 {
-                    cat.attack();
-                }
-                else{
-                    cat.idle();
-                }
-                if(touch.getLocationX() > cat.x)
-                {
-                    cat.left = false;
-                    cat.setFlippedX(true);
-                }
-                else
-                {
-                    cat.left = true;
-                    cat.setFlippedX(false);
+                    if(Date.now() - cat.touchtime < TOUCHDELAY)
+                    {
+                        cat.attack();
+                    }
+                    else{
+                        cat.idle();
+                    }
+                    if(touch.getLocationX() > cat.x)
+                    {   
+                        cat.left = false;
+                        cat.setFlippedX(true);
+                    }
+                    else
+                    {
+                        cat.left = true;
+                        cat.setFlippedX(false);
+                    }
                 }
                 cat.touchtime = Infinity;
             }
